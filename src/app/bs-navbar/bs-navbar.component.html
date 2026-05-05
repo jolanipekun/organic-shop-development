@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-md navbar-light bg-white border-bottom fixed-top">
+  <div class="container">
+    <!-- Brand/Logo -->
+    <a class="navbar-brand" routerLink="/">
+      <i class="fa-solid fa-leaf text-success me-2"></i>
+    </a>
+
+    <!-- Left side: Shopping Cart -->
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+        <a class="nav-link position-relative" routerLink="/shopping-cart">
+          <i class="fa-solid fa-shopping-cart text-secondary"></i>
+
+          <!-- We use ng-container to resolve the Observable count -->
+          <ng-container *ngIf="cartCount$ | async as count">
+            <span *ngIf="count > 0"
+                  class="badge rounded-pill bg-warning text-dark position-absolute top-0 start-100 translate-middle">
+              {{ count }}
+            </span>
+          </ng-container>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Right side: User Authentication -->
+    <div class="navbar-nav ms-auto">
+      <!-- Logic for Logged In User -->
+      <ng-container *ngIf="user$ | async as user; else anonymous">
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             id="userDropdown"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
+            {{ user.displayName }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" routerLink="/my/orders">My Orders</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/orders">Manage Orders</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/products">Manage Products</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <!-- Using authService.logout() directly as defined in TS -->
+              <button class="dropdown-item" (click)="authService.logout()">Logout</button>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+
+      <!-- Logic for Anonymous User -->
+      <ng-template #anonymous>
+        <a class="nav-link cursor-pointer" (click)="authService.login()">Login</a>
+      </ng-template>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer so content doesn't hide under the fixed navbar -->
+<div style="margin-top: 80px;"></div>

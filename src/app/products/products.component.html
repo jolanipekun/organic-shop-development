@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <!-- Sidebar (Left Side) -->
+    <div class="col-3">
+      <div class="sticky-top" style="top: 100px;">
+        <div class="list-group shadow-sm">
+          <!-- The Header Category -->
+          <a
+            class="list-group-item list-group-item-action category-header border-0"
+            routerLink="/"
+          >
+            All Categories
+          </a>
+
+          <!-- Static Visual Categories -->
+          <a class="list-group-item list-group-item-action">Bread</a>
+          <a class="list-group-item list-group-item-action">Dairy</a>
+          <a class="list-group-item list-group-item-action">Fruits</a>
+          <a class="list-group-item list-group-item-action">Seasonings and Spices</a>
+          <a class="list-group-item list-group-item-action">Vegetables</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Grid (Right Side) -->
+    <div class="col-9">
+      <div class="row">
+        <div *ngFor="let p of products$ | async" class="col-md-6 mb-4">
+          <div class="card shadow-sm border-0 h-100">
+            <img src="https://placehold.co/600x400?text=Product+Image" class="card-img-top" alt="{{ p.title }}">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">{{ p.title }}</h5>
+              <p class="card-text text-muted">{{ p.price | currency:'USD' }}</p>
+            </div>
+            <div class="card-footer bg-white border-0 pb-3">
+               <div class="d-grid gap-2 d-md-flex justify-content-between align-items-center">
+                <button (click)="removeFromCart(p)" class="btn btn-secondary btn-sm px-3">-</button>
+
+                  <span class="text-muted small">0 in cart</span>
+                  <button (click)="addToCart(p)" class="btn btn-secondary btn-sm px-3">+</button>
+
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

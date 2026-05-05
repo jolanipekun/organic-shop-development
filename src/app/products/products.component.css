@@ -1,0 +1,40 @@
+/* Increase the overall scale of the sidebar area */
+.col-3 {
+  padding-right: 2rem;
+}
+
+/* Sidebar header - Lime Green */
+.category-header {
+  background-color: #bad33d !important;
+  color: white !important;
+  font-weight: 700;
+  padding: 1.5rem 1rem !important; /* Made larger to match screenshot */
+  border: none !important;
+}
+
+/* The hover effect you were looking for */
+/* We target the hover state specifically to override Bootstrap defaults */
+.list-group-item-action {
+  padding: 1.2rem 1rem !important; /* Matches the vertical scale of the video */
+  color: #495057;
+  border: none !important;
+  border-bottom: 1px solid #eee !important; /* Subtle separator like the screenshot */
+}
+
+.list-group-item-action:hover {
+  background-color: #f8f9fa !important; /* Light grey background on hover */
+  color: #bad33d !important; /* Text turns lime green on hover */
+  padding-left: 1.5rem !important; /* Slight "nudge" effect when hovering */
+}
+
+/* Improve Card Scaling to match the right side of the video screenshot */
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02); /* Makes the card slightly larger on hover */
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1) !important;
+}
