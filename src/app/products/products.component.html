@@ -27,7 +27,7 @@
       <div class="row">
         <div *ngFor="let p of products$ | async" class="col-md-6 mb-4">
           <div class="card shadow-sm border-0 h-100">
-            <img src="https://placehold.co/600x400?text=Product+Image" class="card-img-top" alt="{{ p.title }}">
+            <img [src]="p.imageUrl" class="card-img-top" alt="{{ p.title }}">
             <div class="card-body">
               <h5 class="card-title fw-bold">{{ p.title }}</h5>
               <p class="card-text text-muted">{{ p.price | currency:'USD' }}</p>

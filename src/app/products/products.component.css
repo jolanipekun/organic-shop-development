@@ -12,7 +12,6 @@
   border: none !important;
 }
 
-/* The hover effect you were looking for */
 /* We target the hover state specifically to override Bootstrap defaults */
 .list-group-item-action {
   padding: 1.2rem 1rem !important; /* Matches the vertical scale of the video */
@@ -37,4 +36,11 @@
 .card:hover {
   transform: scale(1.02); /* Makes the card slightly larger on hover */
   box-shadow: 0 8px 15px rgba(0,0,0,0.1) !important;
+}
+
+.card-img-top {
+  height: 350px; /* Fixed height for all images */
+  width: 100%;   /* Fill the width of the card */
+  object-fit: cover; /* This crops the image to fit perfectly without distortion */
+  object-position: center; /* Ensures the middle of the image is what we see */
 }
