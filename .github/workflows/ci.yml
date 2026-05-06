@@ -23,4 +23,4 @@ jobs:
         run: npm install
 
       - name: Run Tests
-        run: npm test -- --watch=false --browsers=ChromeHeadless --no-sandbox --disable-gpu
+        run: npm test -- --watch=false --browsers=ChromeHeadless
