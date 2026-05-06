@@ -2,26 +2,25 @@ name: Angular CI/CD
 
 on:
   push:
-    branches: [ main, feature/** ]
+    branches: [main, feature/**]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Install Dependencies
+        run: npm install
 
-    - name: Run Tests
-      # We use --no-watch and --browsers=ChromeHeadless so the server doesn't get stuck
-      run: npx ng test --watch=false --browsers=ChromeHeadless
+      - name: Run Tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless --no-sandbox --disable-gpu
