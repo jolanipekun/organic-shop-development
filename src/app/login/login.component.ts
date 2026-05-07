@@ -7,7 +7,8 @@ import { AuthService } from '../auth.service';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
@@ -23,9 +24,9 @@ export class LoginComponent implements OnInit {
 
   async loginWithGoogle() {
     try {
-      await this.authService.login();
-      // After successful login, redirect to where they wanted to go
-      this.router.navigateByUrl(this.returnUrl);
+      let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+      localStorage.setItem('returnUrl', returnUrl);
+      this.authService.login();
     } catch (err) {
       console.error("Login failed", err);
     }
