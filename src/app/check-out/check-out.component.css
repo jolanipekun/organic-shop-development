@@ -1,0 +1,33 @@
+/* check-out.component.css */
+
+.btn-place-order {
+  background-color: #d4e157 !important; /* The Pear Green color */
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 10px;
+}
+
+/* Darken slightly when hovering */
+.btn-place-order:hover:not(:disabled) {
+  background-color: #c0ca33 !important;
+}
+
+/* Make it look inactive when the form is incomplete */
+.btn-place-order:disabled {
+  background-color: #e0e0e0 !important;
+  color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+/* Optional: Add some spacing to the labels for a cleaner look */
+label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
+}

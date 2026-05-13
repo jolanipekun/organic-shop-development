@@ -1,23 +1,24 @@
-<p>
-  <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
-</p>
+<div class="container mt-4">
+  <p><a routerLink="/admin/products/new" class="btn btn-primary">New Product</a></p>
 
-<table class="table">
-  <thead>
+  <p>
+    <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+  </p>
+
+  <table class="table">
+    <thead>
       <tr>
-          <th>Title</th>
-          <th>Price</th>
-          <th></th>
+        <th>Title</th>
+        <th>Price</th>
+        <th></th>
       </tr>
-  </thead>
-  <tbody>
-      <tr *ngFor="let p of products$ | async">
-          <td>{{ p.title }}</td>
-          <td>{{ p.price | currency:'USD' }}</td>
-          <td>
-              <!-- We will use the 'key' we set up in the service to link to the edit page -->
-              <a [routerLink]="['/admin/products/', p.key]">Edit</a>
-          </td>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of filteredProducts">
+        <td>{{ p.title }}</td>
+        <td>{{ p.price | currency:'USD' }}</td>
+        <td><a [routerLink]="['/admin/products', p.key]">Edit</a></td>
       </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

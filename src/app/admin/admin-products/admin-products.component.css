@@ -1,0 +1,40 @@
+/* admin-products.component.css */
+
+h1 {
+  font-weight: 500;
+  color: #333;
+}
+
+.btn-primary {
+  /* Using the standard blue or your pear green if you prefer branding consistency */
+  padding: 8px 16px;
+  font-weight: 500;
+}
+
+.table {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table thead th {
+  border-top: none;
+  font-weight: 600;
+  color: #666;
+  text-transform: capitalize;
+}
+
+.edit-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+
+/* Adds a nice hover effect to the rows just like a professional dashboard */
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+}

@@ -1,42 +1,52 @@
 import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Database, ref, set, get, remove } from '@angular/fire/database';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; // 1. Make sure Router is imported
-import { CategoryService } from '../../category.service';
-import { ProductService } from '../../product.service'; // 2. ProductService is already imported
-import { ShoppingCartService } from '../../shopping-cart.service';
-import { Observable } from 'rxjs';
-
-interface Category {
-  key: string;
-  name: string;
-}
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './product-form.component.html',
-  styleUrl: './product-form.component.css'
+  styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent {
-  categories$: Observable<Category[]>;
+  product: any = {};
+  id: string | null;
+  private db = inject(Database);
 
-  private productService = inject(ProductService);
-  private router = inject(Router);
-  private cartService = inject(ShoppingCartService);
+  constructor(private router: Router, private route: ActivatedRoute) {
+    // 1. Grab the ID from the URL (/admin/products/123)
+    this.id = this.route.snapshot.paramMap.get('id');
 
-  constructor() {
-    const categoryService = inject(CategoryService);
-    this.categories$ = categoryService.getAll() as Observable<Category[]>;
+    // 2. If ID exists, we are in EDIT mode. Fetch the product from Firebase.
+    if (this.id) {
+      get(ref(this.db, `products/${this.id}`)).then(snapshot => {
+        if (snapshot.exists()) {
+          this.product = snapshot.val();
+        }
+      });
+    }
   }
 
   save(product: any) {
-    this.productService.create(product);
-    this.router.navigate(['/admin/products']);
+    // If we have an ID, update the existing node. If not, create a new one.
+    const productPath = this.id ? `products/${this.id}` : `products/${new Date().getTime()}`;
+    const productRef = ref(this.db, productPath);
+
+    set(productRef, product).then(() => {
+      this.router.navigate(['/admin/products']);
+    });
   }
 
-  addToCart(product: any) {
-    this.cartService.addToCart(product);
+  delete() {
+    if (!confirm('Are you sure you want to delete this product?')) return;
+
+    if (this.id) {
+      remove(ref(this.db, `products/${this.id}`)).then(() => {
+        this.router.navigate(['/admin/products']);
+      });
+    }
   }
 }

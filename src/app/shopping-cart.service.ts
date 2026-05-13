@@ -1,19 +1,17 @@
 import { Injectable, inject } from '@angular/core';
-import { Database, ref, set, get, push, remove } from '@angular/fire/database';
-import { BehaviorSubject } from 'rxjs';
+import { Database, ref, set, get, push, remove, listVal } from '@angular/fire/database';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
   private db = inject(Database);
-
-  // This holds our count without a Firebase listener
   private cartCountSource = new BehaviorSubject<number>(0);
   cartCount$ = this.cartCountSource.asObservable();
 
   constructor() {
-    this.refreshCount(); // Load initial count once
+    this.refreshCount();
   }
 
   private getOrCreateCartId(): string {
@@ -28,11 +26,11 @@ export class ShoppingCartService {
     return newId;
   }
 
-  async getCart() {
-    return { key: this.getOrCreateCartId() };
+  async getCart(): Promise<Observable<any[]>> {
+    const cartId = this.getOrCreateCartId();
+    return listVal(ref(this.db, `shopping-carts/${cartId}/items`));
   }
 
-  // Forces the Navbar to update by reading the DB once
   async refreshCount() {
     const cartId = this.getOrCreateCartId();
     const itemsRef = ref(this.db, `shopping-carts/${cartId}/items`);
@@ -70,7 +68,6 @@ export class ShoppingCartService {
           quantity: newQuantity
         });
       }
-      // CRITICAL: Only update the UI after the database write is finished
       await this.refreshCount();
     } catch (err) {
       console.error("Update failed", err);
